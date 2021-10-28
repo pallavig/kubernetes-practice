@@ -1,0 +1,152 @@
+Config:
+
+Create a context in the kubectl config file:
+gcloud container clusters get-credentials fa-commerce-dev-cluster --region us-east4
+
+View Config:
+kubectl config view
+
+Switch context:
+kubectl config use-context gke_falabella-catalyst-bu-dev_us-east4_fa-commerce-dev-cluster
+---------
+
+
+Pod:
+
+Get pods in default namespace:
+kubectl get pods
+kubectl get pods -o wide
+
+Get pods in from namespace:
+kubectl get pods -n falabella
+
+Describe pod:
+kubectk describe pod data-ingestion-commerce -n falabella
+
+Create pod:
+kubectl run nginx --image nginx
+
+Delete pod:
+kubectl delete pod nginx
+
+Get pod definition file:
+kubectl get pod <pod-name> -o yaml > pod-definition.yaml
+
+View pod in all namespaces:
+kubectl get pod --all-namespaces
+
+Explain pod:
+kubectl explain pods --recursive
+---------
+
+
+Deployment:
+
+Create deployment:
+kubectl create deployment nginx --image=nginx
+
+Get deployment in from namespace:
+kubectl get pods -n falabella
+
+Describe deployment:
+kubectl describe deployment data-ingestion-commerce -n falabella
+
+Delete deployment:
+kubectl delete deployment nginx
+
+Status:
+kubectl rollout status deployment/data-ingestion-commerce -n falabella
+
+History:
+kubectl rollout history deployment/data-ingestion-commerce -n falabella
+
+Undo:
+kubectl rollout undo nginx-deployment
+
+-------
+
+
+Create object:
+kubectl apply -f filemame
+OR
+kubectl create -f filename/folder
+-------
+
+Minikube:
+
+start minikube:
+minikube start --memory 6000 --cpus=4 --driver=hyperkit
+
+stop minikube:
+minikube stop
+
+status:
+minikube status
+
+ssh:
+minikube ssh
+------
+
+Replica set:
+
+Get replica set
+kubectl get replicaset
+kubectl get replicaset -o wide
+
+Delete replica set: (deletes replica set and pods)
+kubectl delete replicaset my-replica
+
+Replace replica set:
+kubectl replace -f replicaset-definition.yml
+kubectl scale --replicas=2 rs/new-replica-set
+
+Scale replica set:
+kubectl scale -replicas=6 -f replicaset-definition.yml
+
+Edit replica set:
+kubectl edit replicaset <replica-set-name>
+
+Get yaml for replica set:
+kubectl get rs new-replica-set -o yaml > new-replica-set.yaml
+--------
+
+
+Namespaces:
+
+Create namespace:
+kubectl create namespace dev
+
+Get namespaces:
+kubectl get namespaces
+
+Switch namespace:
+kubectl config set-context $(kubectl config current-context) --namespace=dev
+
+---------
+
+
+Config maps:
+
+Create config map:
+kubectl create configmap app-config --from-literal=APP_COLOR=blue
+
+Get config maps:
+kubectl get configmaps
+
+
+---------
+
+
+Secret:
+
+Create secret:
+kubectl create secret generic app-secret --from-literal=DB_HOST=mysql
+kubectl create secret generic app-secret --from-file=app.properties
+
+Get secret:
+kubectl get secret
+
+See secret with value:
+kubectl get secret api-secret -o yaml
+
+---------
